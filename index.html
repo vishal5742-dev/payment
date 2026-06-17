@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise! ❤️</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff5f5;
+            color: #4a4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+            max-width: 400px;
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            color: #e53e3e;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #c53030;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .terms-list {
+            text-align: left;
+            background: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .terms-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .terms-list li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .btn {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .heart {
+            font-size: 3rem;
+            color: #e53e3e;
+            animation: pulse 1.5s infinite;
+            margin-top: 20px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            position: absolute;
+            animation: fall 3s linear infinite;
+            top: -10px;
+            z-index: 999;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="container">
+        <h1>Surprise! ❤️</h1>
+        <p>You thought you were scanning a QR code to pay me back, but I just wanted an excuse to share a nice message with you.</p>
+        <p>Even though the distance keeps us apart right now, you matter a lot to me.</p>
+        <p><i>(By the way, I spent the last hour learning how to code and building this website from scratch, just to surprise you! The next actual date when we meet up is 100% on me!)</i></p>
+        
+        <h3>⚠️ Connection Requested</h3>
+        <p>Before proceeding, please look over the connection terms:</p>
+        
+        <div class="terms-list">
+            <ul>
+                <li>You agree to receive a real hug the moment we finally meet.</li>
+                <li>You accept that you look beautiful to me.</li>
+                <li>You agree to let us keep building our connection day by day.</li>
+            </ul>
+        </div>
+
+        <button class="btn" onclick="acceptTerms()">[ ACCEPT ]</button>
+    </div>
+
+    <div id="step2" class="container hidden">
+        <h1>Connection Made! 😊</h1>
+        <p><b>Successfully established!</b></p>
+        <p>Thank you for being in my life, even from miles away. I am genuinely looking forward to us finally meeting very soon.</p>
+        <div class="heart">❤️</div>
+    </div>
+
+    <script>
+        function acceptTerms() {
+            // Switch screens
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            
+            // Trigger Confetti
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            confetti.style.backgroundColor = ['#e53e3e', '#f6ad55', '#f687b3', '#68d391', '#63b3ed'][Math.floor(Math.random() * 5)];
+            confetti.style.width = Math.random() * 8 + 5 + 'px';
+            confetti.style.height = confetti.style.width;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 4000);
+        }
+    </script>
+
+</body>
+</html>
