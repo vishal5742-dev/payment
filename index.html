@@ -283,14 +283,6 @@
             <div class="heart-glow"></div>
             <div class="heart">❤️</div>
         </div>
-
-        <!-- New Gemini LLM-powered feature -->
-        <div class="reveal-text animate-reveal delay-4" style="margin-top: 30px;">
-            <button id="geminiBtn" class="btn" onclick="generateLoveMessage()" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb); box-shadow: 0 8px 15px rgba(161, 140, 209, 0.4);">
-                Create a Magic Poem ✨
-            </button>
-            <div id="geminiResult" style="margin-top: 15px; font-size: 1.05rem; font-style: italic; color: #d62828; min-height: 50px;"></div>
-        </div>
     </div>
 
     <script>
@@ -396,64 +388,6 @@
             setTimeout(() => {
                 confetti.remove();
             }, 6000);
-        }
-
-        // --- Gemini API Integration ---
-        async function generateLoveMessage() {
-            const btn = document.getElementById('geminiBtn');
-            const resultDiv = document.getElementById('geminiResult');
-            
-            btn.disabled = true;
-            btn.innerText = "Writing with love... ✨";
-            resultDiv.innerText = "";
-
-            const apiKey = ""; // API key is automatically provided by the runtime environment
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const promptText = "Write a short, highly romantic 4-line poem for my girlfriend. We are in a long-distance relationship, but the wait is worth it, and she is the most beautiful woman to me. Use a sweet, sincere, and tender tone. Respond only with the poem, without any additional text.";
-
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                systemInstruction: { parts: [{ text: "You are a deeply in love and romantic boyfriend expressing his feelings." }] }
-            };
-
-            // Exponential backoff implementation for API retries
-            const maxRetries = 5;
-            const delays = [1000, 2000, 4000, 8000, 16000];
-            let success = false;
-
-            for (let i = 0; i <= maxRetries; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) throw new Error("Network error connecting to Gemini");
-
-                    const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    
-                    if (text) {
-                        // Replace line breaks with HTML <br> tags to format the poem properly
-                        resultDiv.innerHTML = text.replace(/\n/g, '<br>');
-                        btn.style.display = 'none'; // Hide the button after success
-                        success = true;
-                        break;
-                    }
-                } catch (error) {
-                    if (i < maxRetries) {
-                        await new Promise(res => setTimeout(res, delays[i]));
-                    }
-                }
-            }
-
-            if (!success) {
-                resultDiv.innerText = "My love for you is so big it broke the connection. ❤️ (Please try again later)";
-                btn.disabled = false;
-                btn.innerText = "Create a Magic Poem ✨";
-            }
         }
     </script>
 
