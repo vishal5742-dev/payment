@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umm heyyyy... </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Surprise! ❤️</title>
+    <!-- Importing beautiful aesthetic fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -93,7 +94,8 @@
 
         .button-group {
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Stacked vertically */
+            align-items: center;
             gap: 15px;
             margin-top: 20px;
             position: relative;
@@ -124,38 +126,84 @@
             color: #a0a0a0;
             border: 2px solid #e0e0e0;
             box-shadow: none;
-            width: auto;
-            min-width: 100px;
             transition: all 0.2s ease;
+            z-index: 9999;
+        }
+
+        /* --- FINAL PAGE CINEMATIC STYLES --- */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .animate-reveal {
+            animation: slowFadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 2.5s; }
+        .delay-3 { animation-delay: 4.5s; }
+        .delay-4 { animation-delay: 6s; }
+
+        @keyframes slowFadeInUp {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .heart-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 117, 140, 0.4) 0%, rgba(255, 117, 140, 0) 70%);
+            border-radius: 50%;
+            animation: pulseGlow 2s infinite;
+            z-index: 0;
+            opacity: 0; /* Hidden until final delay */
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
         }
 
         .heart {
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: #e63946;
-            animation: pulse 1.5s infinite;
-            margin-top: 20px;
-            display: inline-block;
+            animation: pulseHeart 1.5s infinite;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes pulse {
+        @keyframes pulseHeart {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
+        /* Falling floating emojis instead of squares */
         .confetti {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            font-size: 1.5rem;
             position: absolute;
-            animation: fall 3s linear infinite;
-            top: -10px;
+            animation: fall 4s linear infinite;
+            top: -10vh;
             z-index: 999;
-            border-radius: 50%;
+            user-select: none;
         }
 
         @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
         .hidden {
@@ -165,14 +213,18 @@
 </head>
 <body>
 
+    <!-- PAGE 1: THE SURPRISE -->
     <div id="page1" class="container fade-in-up">
         <h1>Surprise!</h1>
         <p>You thought you were scanning a QR code to pay me back, but I just wanted an excuse to share a glimpse of how much I love you.</p>
         <p>Even though the distance keeps us apart right now, you matter a lot to me.</p>
         <p style="font-size: 0.9rem; color: #888;"><i>(By the way, I spent the last hour making this website just to surprise you!)</i></p>
-        <button class="btn" onclick="navigateTo('page2')">Proceed Ahead</button>
+        <div class="button-group">
+            <button class="btn" onclick="navigateTo('page2')">Proceed Ahead</button>
+        </div>
     </div>
 
+    <!-- PAGE 2: CONDITION 1 -->
     <div id="page2" class="container hidden">
         <h3>Connection Term #1</h3>
         <p>Before proceeding, you must agree to the first term:</p>
@@ -181,10 +233,11 @@
         </div>
         <div class="button-group">
             <button class="btn" onclick="navigateTo('page3')">I Agree</button>
-            <button class="btn btn-runaway" onmouseover="runAway(this)" ontouchstart="runAway(this)">No Way</button>
+            <button class="btn btn-runaway" onmouseenter="runAway(this, event)" ontouchstart="runAway(this, event)">No Way</button>
         </div>
     </div>
 
+    <!-- PAGE 3: CONDITION 2 -->
     <div id="page3" class="container hidden">
         <h3>Connection Term #2</h3>
         <p>Please review and accept the second term:</p>
@@ -193,10 +246,11 @@
         </div>
         <div class="button-group">
             <button class="btn" onclick="navigateTo('page4')">I Accept</button>
-            <button class="btn btn-runaway" onmouseover="runAway(this)" ontouchstart="runAway(this)">I Don't</button>
+            <button class="btn btn-runaway" onmouseenter="runAway(this, event)" ontouchstart="runAway(this, event)">I Don't</button>
         </div>
     </div>
 
+    <!-- PAGE 4: CONDITION 3 -->
     <div id="page4" class="container hidden">
         <h3>Connection Term #3</h3>
         <p>And the final term before setup completes:</p>
@@ -205,14 +259,38 @@
         </div>
         <div class="button-group">
             <button class="btn" onclick="acceptTerms()">Absolutely</button>
-            <button class="btn btn-runaway" onmouseover="runAway(this)" ontouchstart="runAway(this)">Nope</button>
+            <button class="btn btn-runaway" onmouseenter="runAway(this, event)" ontouchstart="runAway(this, event)">Nope</button>
         </div>
     </div>
 
-    <div id="page5" class="container hidden">
-        <h1>It's Official!</h1>
-        <p>Honestly, thank you for being the absolute best part of my days. Even with all this distance, you make me feel so incredibly loved. I cannot wait for the day when these screens disappear and it's just you and me.</p>
-        <div class="heart">❤️</div>
+    <!-- PAGE 5: EMOTIONAL SUCCESS SCREEN -->
+    <div id="page5" class="container hidden" style="padding-top: 50px; padding-bottom: 50px;">
+        <h1 class="reveal-text animate-reveal">It's Official!</h1>
+        
+        <!-- Staggered text reveal for emotional impact -->
+        <p class="reveal-text animate-reveal delay-1" style="font-size: 1.15rem; font-weight: 600; color: #d62828;">
+            Honestly, thank you for being the absolute best part of my days.
+        </p>
+        <p class="reveal-text animate-reveal delay-2" style="font-size: 1.1rem;">
+            Even with all this distance, you make me feel so incredibly loved.
+        </p>
+        <p class="reveal-text animate-reveal delay-3" style="font-size: 1.1rem; margin-bottom: 5px;">
+            I cannot wait for the day when these screens disappear and it's just you and me.
+        </p>
+        
+        <!-- Glowing heart reveal -->
+        <div class="heart-wrapper reveal-text animate-reveal delay-4">
+            <div class="heart-glow"></div>
+            <div class="heart">❤️</div>
+        </div>
+
+        <!-- New Gemini LLM-powered feature -->
+        <div class="reveal-text animate-reveal delay-4" style="margin-top: 30px;">
+            <button id="geminiBtn" class="btn" onclick="generateLoveMessage()" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb); box-shadow: 0 8px 15px rgba(161, 140, 209, 0.4);">
+                Create a Magic Poem ✨
+            </button>
+            <div id="geminiResult" style="margin-top: 15px; font-size: 1.05rem; font-style: italic; color: #d62828; min-height: 50px;"></div>
+        </div>
     </div>
 
     <script>
@@ -225,51 +303,157 @@
             
             const nextPage = document.getElementById(pageId);
             nextPage.classList.remove('hidden');
-            // Slight delay to trigger animation restart
+            
+            // THE BUG FIX: Disable runaway buttons for 800ms to prevent accidental clicks
+            const runaways = nextPage.querySelectorAll('.btn-runaway');
+            runaways.forEach(btn => {
+                btn.style.pointerEvents = 'none'; // Lock
+                setTimeout(() => {
+                    btn.style.pointerEvents = 'auto'; // Unlock after page is visible
+                }, 800);
+            });
+
             setTimeout(() => {
                 nextPage.classList.add('fade-in-up');
             }, 10);
         }
 
         // Logic for the sarcastic moving button
-        function runAway(button) {
-            // Change position to fixed so it can fly anywhere on the screen
+        function runAway(button, event) {
+            // Stop accidental clicks
+            if(event) {
+                event.preventDefault();
+            }
+
+            // Set fixed so it detaches from the container without stretching the Agree button
             button.style.position = 'fixed';
+            button.style.width = 'fit-content';
+            button.style.padding = '10px 20px';
             
-            // Calculate safe boundaries so it doesn't go off-screen
-            const maxX = window.innerWidth - button.clientWidth - 20;
-            const maxY = window.innerHeight - button.clientHeight - 20;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const btnWidth = button.offsetWidth;
+            const btnHeight = button.offsetHeight;
+
+            // Pick a random edge (0: Top, 1: Bottom, 2: Left, 3: Right) to keep it out of the text
+            const edge = Math.floor(Math.random() * 4);
+            let randomX, randomY;
+
+            if (edge === 0) { // Top edge
+                randomX = Math.random() * (windowWidth - btnWidth);
+                randomY = Math.random() * (windowHeight * 0.15); 
+            } else if (edge === 1) { // Bottom edge
+                randomX = Math.random() * (windowWidth - btnWidth);
+                randomY = windowHeight - btnHeight - Math.random() * (windowHeight * 0.15);
+            } else if (edge === 2) { // Left edge
+                randomX = Math.random() * (windowWidth * 0.15);
+                randomY = Math.random() * (windowHeight - btnHeight);
+            } else { // Right edge
+                randomX = windowWidth - btnWidth - Math.random() * (windowWidth * 0.15);
+                randomY = Math.random() * (windowHeight - btnHeight);
+            }
             
-            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
-            
-            button.style.left = randomX + 'px';
-            button.style.top = randomY + 'px';
+            // Apply the new safe coordinates
+            button.style.left = Math.max(10, Math.min(randomX, windowWidth - btnWidth - 10)) + 'px';
+            button.style.top = Math.max(10, Math.min(randomY, windowHeight - btnHeight - 10)) + 'px';
         }
 
-        // Final page logic with confetti
+        // Final page logic
         function acceptTerms() {
             navigateTo('page5');
-            for (let i = 0; i < 75; i++) {
-                setTimeout(createConfetti, i * 20); // Staggers the confetti fall
+            
+            // Make the final page's heart glow turn on after the last text appears
+            setTimeout(() => {
+                const glow = document.querySelector('.heart-glow');
+                if (glow) glow.style.opacity = '1';
+            }, 6000); // 6 seconds matches the delay-4 class
+
+            // Spawn romantic floating emojis instead of boring squares
+            for (let i = 0; i < 60; i++) {
+                setTimeout(createConfetti, i * 150); 
             }
         }
 
         function createConfetti() {
             const confetti = document.createElement('div');
             confetti.classList.add('confetti');
+            
+            // Randomize between hearts and sparkles
+            const emojis = ['❤️', '💖', '✨', '💕', '🌸'];
+            confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
             confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            // Romantic color palette for confetti
-            const colors = ['#ff758c', '#ff7eb3', '#ffb6c1', '#ffffff', '#e63946'];
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.width = Math.random() * 8 + 6 + 'px';
-            confetti.style.height = confetti.style.width;
+            
+            // Different falling speeds
+            confetti.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            
+            // Random sizes
+            confetti.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+
             document.body.appendChild(confetti);
             
+            // Cleanup after animation finishes
             setTimeout(() => {
                 confetti.remove();
-            }, 4000);
+            }, 6000);
+        }
+
+        // --- Gemini API Integration ---
+        async function generateLoveMessage() {
+            const btn = document.getElementById('geminiBtn');
+            const resultDiv = document.getElementById('geminiResult');
+            
+            btn.disabled = true;
+            btn.innerText = "Writing with love... ✨";
+            resultDiv.innerText = "";
+
+            const apiKey = ""; // API key is automatically provided by the runtime environment
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const promptText = "Write a short, highly romantic 4-line poem for my girlfriend. We are in a long-distance relationship, but the wait is worth it, and she is the most beautiful woman to me. Use a sweet, sincere, and tender tone. Respond only with the poem, without any additional text.";
+
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                systemInstruction: { parts: [{ text: "You are a deeply in love and romantic boyfriend expressing his feelings." }] }
+            };
+
+            // Exponential backoff implementation for API retries
+            const maxRetries = 5;
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            let success = false;
+
+            for (let i = 0; i <= maxRetries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error("Network error connecting to Gemini");
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    if (text) {
+                        // Replace line breaks with HTML <br> tags to format the poem properly
+                        resultDiv.innerHTML = text.replace(/\n/g, '<br>');
+                        btn.style.display = 'none'; // Hide the button after success
+                        success = true;
+                        break;
+                    }
+                } catch (error) {
+                    if (i < maxRetries) {
+                        await new Promise(res => setTimeout(res, delays[i]));
+                    }
+                }
+            }
+
+            if (!success) {
+                resultDiv.innerText = "My love for you is so big it broke the connection. ❤️ (Please try again later)";
+                btn.disabled = false;
+                btn.innerText = "Create a Magic Poem ✨";
+            }
         }
     </script>
 
